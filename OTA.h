@@ -30,7 +30,7 @@ void setupOTA(const char* nameprefix, const char* ssid, const char* password) {
   // ArduinoOTA.setPassword("admin");
   // ArduinoOTA.setPasswordHash("21232f297a57a5a743894a0e4a801fc3");
   ArduinoOTA.onStart([]() {
-    tone(BUZZER, 1400, 200);
+    tone(1400, 200);
     delay(100);
 	//NOTE: make .detach() here for all functions called by Ticker.h library - not to interrupt transfer process in any way.
     String type;
@@ -46,7 +46,7 @@ void setupOTA(const char* nameprefix, const char* ssid, const char* password) {
     Serial.println("╔═══════════════════════╦══════════════════════════╗");
     Serial.println("║ INCOMING UPDATE FROM  ║      "+ArduinoOTA.getOTASenderIP().toString()+"      ║");
     Serial.println("╠═══════════════════════╬══════════════════════════╣");
-    tone(BUZZER, 2200, 300);
+    tone(2200, 300);
   });
   
   ArduinoOTA.onEnd([]() {
@@ -56,11 +56,11 @@ void setupOTA(const char* nameprefix, const char* ssid, const char* password) {
     Serial.println("╠══════════════════════════════════════════════════╣");
     Serial.println("║      Press hardware reset button to reload.      ║");
     Serial.println("╚══════════════════════════════════════════════════╝\r\n\n");
-    tone(BUZZER, 2000, 200);
+    tone(2000, 200);
     delay(250);
-    tone(BUZZER, 2000, 200);
+    tone(2000, 200);
     delay(250);
-    tone(BUZZER, 2000, 200);
+    tone(2000, 200);
     delay(250);
     Reboot();
     // for (;;);  ║  ╠   ╚═══╝      ╘══╛ │");

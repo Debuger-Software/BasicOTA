@@ -38,17 +38,17 @@ ESP8266WebServer server(80);
 
 
 void handleRoot() {
-  digitalWrite(TRANSMITER_1, LOW);
+  tone(TRANSMITER_1, 500,350);
   delay(250);
-  digitalWrite(TRANSMITER_1, HIGH);
-  server.send(200, "text/plain", "TRANSMITER 1 - SIGNAL SEND!\r\n");
+  tone(TRANSMITER_1, 350, 1000);
+  server.send(204);
   #ifdef REQUIRE_SD
   writeFileSD("/SERVER.log", "SIGNAL\r\n");
   #endif
 }
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
-  pinMode(BUZZER, OUTPUT);
+  ledcAttachPin(BUZZER, 0);
   pinMode(TRANSMITER_1, OUTPUT);
   digitalWrite(TRANSMITER_1, HIGH);
   Serial.begin(115200);
@@ -78,7 +78,7 @@ void setup() {
 
 void loop() {
   ArduinoOTA.handle();
-  if (!ArduinoOTA.getOTASenderIP()) { 
+  if (!ArduinoOTA.getCommand()) { 
   digitalWrite(LED_BUILTIN, LED_ON);   // turn the LED on (HIGH is the voltage level)
   // digitalWrite(TRANSMITER_1, !digitalRead(TRANSMITER_1));
   server.handleClient();

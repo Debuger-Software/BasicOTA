@@ -1,9 +1,9 @@
 #ifdef ESP32
-void tone(double bpin, double bfreq, double btms = 0) {
-  ledcWriteTone(bpin, bfreq);
+void tone(double chan, double bfreq, double btms = 0) {
+  ledcWriteTone(0, bfreq);
   if (btms >= 1) {
     delay(btms);
-    ledcWriteTone(bpin, 0);
+    ledcWriteTone(0, 0);
   }
 }
 #endif
@@ -11,7 +11,7 @@ void tone(double bpin, double bfreq, double btms = 0) {
 void Reboot() {
   for (int x=1;x<20;x++) {
       digitalWrite(LED_BUILTIN, LED_ON);
-      tone(BUZZER, 400, 75);
+      tone(0, 400, 75);
       delay(100);
       digitalWrite(LED_BUILTIN, LED_OFF);
       delay(100);
