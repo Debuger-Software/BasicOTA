@@ -38,9 +38,9 @@ ESP8266WebServer server(80);
 
 
 void handleRoot() {
-  tone(TRANSMITER_1, 500,350);
-  delay(250);
-  tone(TRANSMITER_1, 350, 1000);
+  digitalWrite(TRANSMITER_1, LOW);
+  delay(200);
+  digitalWrite(TRANSMITER_1, HIGH);
   server.send(204);
   #ifdef REQUIRE_SD
   writeFileSD("/SERVER.log", "SIGNAL\r\n");
@@ -48,7 +48,11 @@ void handleRoot() {
 }
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
+  #ifdef ESP32
   ledcAttachPin(BUZZER, 0);
+  #else
+  pinMode(BUZZER, OUTPUT);
+  #endif
   pinMode(TRANSMITER_1, OUTPUT);
   digitalWrite(TRANSMITER_1, HIGH);
   Serial.begin(115200);
@@ -66,7 +70,7 @@ void setup() {
   MDNS.begin(otaHostName);
   ArduinoOTA.setRebootOnSuccess(true);
   setupOTA(otaHostName, ssid, password);
-  server.on("/", handleRoot);
+  server.on("/light", handleRoot);
   server.begin();
   Serial.println("\e[36m[D]:HTTP server started\e[0m");
   Serial.println("********************** BOOT COMPLETE *********************");
@@ -89,8 +93,8 @@ void loop() {
   else if (last_diff > max_millis && last_diff < 4000) {max_millis = last_diff;}
   Serial.printf(" + %u ms    (min: %u , max: %u , diff: %u)                              \r", last_diff, min_millis, max_millis, (max_millis - min_millis));
                       // wait for a second
-  delay(20); 
+  delay(100); 
   digitalWrite(LED_BUILTIN, LED_OFF);    // turn the LED off by making the voltage LOW
-  delay(1979);                       // wait for a second
+  delay(900);                       // wait for a second
   }
 }

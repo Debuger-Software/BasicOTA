@@ -1,3 +1,3 @@
-build/
-.vscode/
-credentials.h
+**/build*
+**/.vscode*
+/credentials.h
