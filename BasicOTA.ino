@@ -12,6 +12,8 @@ const char* otaHostName = "DBGR-ESP32";
 const char* otaHostName = "DBGR-ESP8266-BLUE";
 #endif
 
+#include <Wire.h> 
+#include <LiquidCrystal_I2C.h>
 #include <SPI.h>
 
 #define BUZZER 4
@@ -34,6 +36,7 @@ WebServer server(80);
 #include <ESP8266WebServer.h>
 ESP8266WebServer server(80);
 #endif
+LiquidCrystal_I2C lcd(0x27,20,4);
 
 
 
@@ -47,6 +50,9 @@ void handleRoot() {
   #endif
 }
 void setup() {
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0,2);
   pinMode(LED_BUILTIN, OUTPUT);
   #ifdef ESP32
   ledcAttachPin(BUZZER, 0);
@@ -75,9 +81,12 @@ void setup() {
   Serial.println("\e[36m[D]:HTTP server started\e[0m");
   Serial.println("********************** BOOT COMPLETE *********************");
   Serial.printf("************************ + %u ms ***********************\r\n\n", (millis() - last_millis));
-  last_millis = millis();
+  lcd.print("-- BOOT  COMPLETE --");
+  lcd.setCursor(0,3);
+  lcd.printf("--    %u ms    --",millis() - last_millis);
   tone(BUZZER, 1400, 200);
   delay(100);
+  last_millis = millis();
 }
 
 void loop() {
