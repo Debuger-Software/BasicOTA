@@ -45,7 +45,6 @@ c:\Users\dymar\Desktop\BasicOTA\build_dir\sketch\BasicOTA.ino.cpp.o: \
  C:\Users\dymar\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\3.0.2\cores\esp8266/debug.h \
  C:\Users\dymar\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\3.0.2\variants\d1/pins_arduino.h \
  c:\users\dymar\appdata\local\arduino15\packages\esp8266\hardware\esp8266\3.0.2\variants\generic\common.h \
- C:\Users\dymar\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\3.0.2\libraries\SPI/SPI.h \
  c:\Users\dymar\Desktop\BasicOTA\build_dir\sketch\DBGR.h \
  c:\Users\dymar\Desktop\BasicOTA\build_dir\sketch\credentials.h \
  c:\Users\dymar\Desktop\BasicOTA\build_dir\sketch\OTA.h \

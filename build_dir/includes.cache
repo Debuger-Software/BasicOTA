@@ -11,11 +11,6 @@
   },
   {
     "Sourcefile": "c:\\Users\\dymar\\Desktop\\BasicOTA\\build_dir\\sketch\\BasicOTA.ino.cpp",
-    "Include": "SPI.h",
-    "Includepath": "C:\\Users\\dymar\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\libraries\\SPI"
-  },
-  {
-    "Sourcefile": "c:\\Users\\dymar\\Desktop\\BasicOTA\\build_dir\\sketch\\BasicOTA.ino.cpp",
     "Include": "ESP8266WiFi.h",
     "Includepath": "C:\\Users\\dymar\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\libraries\\ESP8266WiFi\\src"
   },
@@ -36,11 +31,6 @@
   },
   {
     "Sourcefile": "c:\\Users\\dymar\\Desktop\\BasicOTA\\build_dir\\sketch\\BasicOTA.ino.cpp",
-    "Include": "",
-    "Includepath": null
-  },
-  {
-    "Sourcefile": "C:\\Users\\dymar\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\libraries\\SPI\\SPI.cpp",
     "Include": "",
     "Includepath": null
   },

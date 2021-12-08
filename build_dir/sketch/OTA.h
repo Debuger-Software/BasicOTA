@@ -1,23 +1,10 @@
 #line 1 "c:\\Users\\dymar\\Desktop\\BasicOTA\\OTA.h"
-#ifdef ESP32
-#include <WiFi.h>
-#include <ESPmDNS.h>
-#else
 #include <ESP8266WiFi.h>
 #include <ESP8266mDNS.h>
-#endif
 
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
 
-#if defined(ESP32_RTOS) && defined(ESP32)
-void ota_handle( void * parameter ) {
-  for (;;) {
-    ArduinoOTA.handle();
-    delay(3500);
-  }
-}
-#endif
 
 void setupOTA(const char* nameprefix, const char* ssid, const char* password) {
   ArduinoOTA.setHostname(nameprefix);
@@ -41,41 +28,14 @@ void setupOTA(const char* nameprefix, const char* ssid, const char* password) {
       type = "filesystem";
 
     // NOTE: if updating SPIFFS this would be the place to unmount SPIFFS using SPIFFS.end()
-    #ifdef REQUIRE_SD
-    writeFileSD("/OTA.log", "OTA START : " + ArduinoOTA.getOTASenderIP().toString()+"\r\n");
-    #endif
-    Serial.println("╔═══════════════════════╦══════════════════════════╗");
-    Serial.println("║ INCOMING UPDATE FROM  ║      "+ArduinoOTA.getOTASenderIP().toString()+"      ║");
-    Serial.println("╠═══════════════════════╬══════════════════════════╣");
-    tone(2200, 300);
   });
   
   ArduinoOTA.onEnd([]() {
-    Serial.print("\n\n\n");
-    Serial.println("╠══════════════════════════════════════════════════╣");
-    Serial.print("\r║\e[5m !WARNING! - FIRMWARE UPDATE COMPLETE - !WARNING!\e[0m ║\r\n");
-    Serial.println("╠══════════════════════════════════════════════════╣");
-    Serial.println("║      Press hardware reset button to reload.      ║");
-    Serial.println("╚══════════════════════════════════════════════════╝\r\n\n");
-    tone(2000, 200);
-    delay(250);
-    tone(2000, 200);
-    delay(250);
-    tone(2000, 200);
-    delay(250);
-    Reboot();
-    // for (;;);  ║  ╠   ╚═══╝      ╘══╛ │");
+
   });
   
   ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
-     Serial.printf("║  Receiving firmware   ║   %06.2f KB / %06.2f KB  ║\r\n╠═══════════════════════╩══════════════════════════╣\r\n", (progress / 1024.00), (total / 1024.00));
-    Serial.print("║");
-    int _barprogress = progress / (total / 100);
-    for (int p=1; p <= _barprogress / 2; p++) {Serial.print("█");}
-    for (int q=_barprogress / 2; q < 50; q++) {Serial.print("░");}
-    Serial.print("║\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
-    if (_barprogress > 50) Serial.print("\033[7m");
-    Serial.printf("%u %%\033[0m\r\n╚══════════════════════════════════════════════════╝\r\e[A\e[A\e[A",_barprogress);
+
   });
   
   ArduinoOTA.onError([](ota_error_t error) {
@@ -94,13 +54,4 @@ void setupOTA(const char* nameprefix, const char* ssid, const char* password) {
   Serial.print(':');
   Serial.println("\e[36m"+String(ArduinoOTA.getOTAPort())+" \e[0m ");
 
-#if defined(ESP32_RTOS) && defined(ESP32)
-  xTaskCreate(
-    ota_handle,          /* Task function. */
-    "OTA_HANDLE",        /* String with name of task. */
-    10000,            /* Stack size in bytes. */
-    NULL,             /* Parameter passed as input of the task */
-    1,                /* Priority of the task. */
-    NULL);            /* Task handle. */
-#endif
 }
