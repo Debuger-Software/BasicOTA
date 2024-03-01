@@ -10,15 +10,13 @@ void setupOTA(const char* nameprefix, const char* ssid, const char* password) {
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
   while (WiFi.waitForConnectResult() != WL_CONNECTED) {
-    Serial.println("Connection Failed! Rebooting...");
-    Reboot();
+    Serial.println("Connection Failed! Giving up...");
+    ESP.restart();
   }
   // ArduinoOTA.setPort(3232); // Use 8266 port if you are working in Sloeber IDE, it is fixed there and not adjustable
   // ArduinoOTA.setPassword("admin");
   // ArduinoOTA.setPasswordHash("21232f297a57a5a743894a0e4a801fc3");
   ArduinoOTA.onStart([]() {
-    tone(1400, 200);
-    delay(100);
 	//NOTE: make .detach() here for all functions called by Ticker.h library - not to interrupt transfer process in any way.
     String type;
     if (ArduinoOTA.getCommand() == U_FLASH)
@@ -48,9 +46,5 @@ void setupOTA(const char* nameprefix, const char* ssid, const char* password) {
 
   ArduinoOTA.begin();
 
-  Serial.print("\e[36m[D]:OTA Service initialized    ----     ");
-  Serial.print(WiFi.localIP());
-  Serial.print(':');
-  Serial.println("\e[36m"+String(ArduinoOTA.getOTAPort())+" \e[0m ");
 
 }
